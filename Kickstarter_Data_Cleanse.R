@@ -88,7 +88,11 @@ kickdf$project_ID <- 1:nrow(kickdf)
 kickdf$project_ID <- kickdf$project_ID + 1000000
 
 # Create Project Table
-projectCol <- c("project_ID","project_name","category_ID", "country_code","original_currency", "launch_date", "deadline","active_days","usd_goal_real", "usd_pledged_real", "proportion_goal_reached", "backers", "project_state")
+projectCol <- c("project_ID", "project_name", "category_ID", 
+                "country_code", "original_currency", "launch_date", 
+                "deadline", "active_days", "usd_goal_real", 
+                "usd_pledged_real", "proportion_goal_reached", 
+                "backers", "project_state")
 projectdf <- kickdf[,projectCol]
 write.csv(projectdf, file = "Project_T.csv")
 
