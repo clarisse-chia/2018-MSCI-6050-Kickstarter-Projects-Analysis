@@ -31,7 +31,6 @@ countrydf <- countrydf[, c("Country_name", "code_2digit")]
 #   16. active_days               integer (2)       Number of days the project was active
 #   16. category_ID               integer (4)       Number of days the project was active
 #   17. proportion_goal_reached   numeric (6.2)
-
 #   18. date                      date(10)
 #   19. day_of_week               character (3)
 #   20. weekday                   character (7)
