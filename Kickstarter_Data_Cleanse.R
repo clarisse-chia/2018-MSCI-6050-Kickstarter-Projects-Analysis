@@ -12,7 +12,7 @@ countrydf <- read.csv("country_code.csv")
 # Keep only country name and 2-digit country code from countrydf
 countrydf <- countrydf[, c("Country_name", "code_2digit")]
 
-#       COLUMN NAMES              DATA TYPE         DESCRIPTION
+#       COLUMN NAMES              DATA TYPE (len)   DESCRIPTION
 #   1.  project_ID                integer (7)       Project identifier
 #   2.  name                      character (96)    Name of the project
 #   3.  category                  factor (18)       Sub-category of the project
@@ -30,10 +30,10 @@ countrydf <- countrydf[, c("Country_name", "code_2digit")]
 #   15. usd_goal_real             numeric (12)      Goal amount in USD
 #   16. active_days               integer (2)       Number of days the project was active
 #   16. category_ID               integer (4)       Number of days the project was active
-#   17. proportion_goal_reached   numeric (6.2)
-#   18. date                      date(10)
-#   19. day_of_week               character (3)
-#   20. weekday                   character (7)
+#   17. proportion_goal_reached   numeric (6.2)     Proportion of goal reached (Pledged/Goal)
+#   18. date                      date (10)         Collection of dates from 2009 to 2018
+#   19. day_of_week               character (3)     Day of week (Mon, Tue, etc.)
+#   20. weekday                   character (7)     Whether a day is a weekday or a weekend
 
 
 # Update column names in kickdf for clarity
