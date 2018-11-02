@@ -3,110 +3,122 @@ rm(list = ls())
 library(dplyr)
 
 # Read in the kickstarted projects dataset
-kickdf <- read.csv("ks-projects-201801.csv")
-# Remove rows in kickdf that are have a launch date of "1970-01-01"
+kickdf <- read.csv("ks-projects-201801.csv", na.strings = "")
+# Remove rows in kickdf that are have a launch Dates of "1970-01-01"
 kickdf <- subset(kickdf, launched != "1970-01-01 01:00:00")
 
-# Read in the country_code dataset
-countrydf <- read.csv("country_code.csv")
+# Read in the CountryCode dataset
+countrydf <- read.csv("country_code.csv", na.strings = "")
 # Keep only country name and 2-digit country code from countrydf
 countrydf <- countrydf[, c("Country_name", "code_2digit")]
 
-#       COLUMN NAMES              DATA TYPE (len)   DESCRIPTION
-#   1.  project_ID                integer (7)       Project identifier
-#   2.  name                      character (96)    Name of the project
-#   3.  category                  factor (18)       Sub-category of the project
-#   4.  main_category             factor (12)       Main category of the project
-#   5.  original_currency         factor (3)        Currency of the project
-#   6.  deadline                  date (10)         Deadline of the project
-#   7.  goal                      numeric (11)      Goal amount in project currency
-#   8.  launch_date               date (10)         Date project was launched
-#   9.  pledged_amount            numeric (11)      Pledged amount in project currency
-#   10. project_state             factor (10)       Current state of project
-#   11. backers                   integer (6)       Number of backers
-#   12. country_code              factor (2)        Country in which the project started
-#   13. usd_pledged               numeric (11)      Pledged amount in USD
-#   14. usd_pledged_real          numeric (11)      Pledged amount in USD adjusted for inflation
-#   15. usd_goal_real             numeric (12)      Goal amount in USD
-#   16. active_days               integer (2)       Number of days the project was active
-#   16. category_ID               integer (4)       Number of days the project was active
-#   17. proportion_goal_reached   numeric (6.2)     Proportion of goal reached (Pledged/Goal)
-#   18. date                      date (10)         Collection of dates from 2009 to 2018
-#   19. day_of_week               character (3)     Day of week (Mon, Tue, etc.)
-#   20. weekday                   character (7)     Whether a day is a weekday or a weekend
+  #     COLUMN NAMES          DATA TYPE         DESCRIPTION
+  # 1.  ProjectID             integer (7)       Project identifier
+  # 2.  ProjectName           character (96)    Name of the project
+  # 3.  SubCategory           factor (18)       Sub-category of the project
+  # 4.  MainCategory          factor (12)       Main category of the project
+  # 5.  OriginalCurrency      factor (3)        Currency of the project
+  # 6.  Deadline              Dates (10)        Deadline of the project
+  # 7.  goal                  numeric (11)      goal amount in project currency
+  # 8.  LaunchDate            Dates (10)        Dates project was launched
+  # 9.  pledged               numeric (11)      PledgedAmount amount in project currency
+  # 10. ProjectState          factor (10)       Current state of project
+  # 11. Backers               integer (6)       Number of Backers
+  # 12. CountryCode           character (2)     Country code where the project started
+  # 13. CountryName           character (44)    Country name corresponding to country code
+  # 14. usd_PledgedAmount     numeric (11)      PledgedAmount amount in USD
+  # 15. PledgedAmount         numeric (11)      PledgedAmount amount in USD adjusted for inflation
+  # 16. GoalAmount            numeric (12)      goal amount in USD
+  # 17. ActiveDays            integer (2)       Number of days the project was active
+  # 18. CategoryID            integer (4)       Unique identifier assigned to each SubCategory
+  # 19. ProportionReached     numeric (6, 2)    Proportion of goal reached (PledgedAmount/goal)
+  # 20. Dates                 Dates (10)         Dates from 01/01/2009 to 12/31/2018
+  # 21. Year                  character (4)     Year corresponding to Dates column
+  # 22. Month                 character (2)     Month corresponding to Dates column
+  # 23. DayOfMonth            character (2)     Day of Month corresponding to Dates column
+  # 24. DayOfWeek             factor (3)        Day of week corresponding to Dates colum
+  # 25. Weekday               factor (7)        Weekday/weekend corresponding to Dates column
 
+# UpDates column names in kickdf for clarity
+names(kickdf)[names(kickdf) == "ID"] <- "ProjectID"
+names(kickdf)[names(kickdf) == "name"] <- "ProjectName"
+names(kickdf)[names(kickdf) == "main_category"] <- "MainCategory"
+names(kickdf)[names(kickdf) == "category"] <- "SubCategory"
+names(kickdf)[names(kickdf) == "deadline"] <- "Deadline"
+names(kickdf)[names(kickdf) == "currency"] <- "OriginalCurrency"
+names(kickdf)[names(kickdf) == "launched"] <- "LaunchDate"
+names(kickdf)[names(kickdf) == "usd_pledged_real"] <- "PledgedAmount"
+names(kickdf)[names(kickdf) == "backers"] <- "Backers"
+names(kickdf)[names(kickdf) == "state"] <- "ProjectState"
+names(kickdf)[names(kickdf) == "country"] <- "CountryCode"
+names(kickdf)[names(kickdf) == "usd_goal_real"] <- "GoalAmount"
 
-# Update column names in kickdf for clarity
-names(kickdf)[names(kickdf) == "ID"] <- "project_ID"
-names(kickdf)[names(kickdf) == "name"] <- "project_name"
-names(kickdf)[names(kickdf) == "category"] <- "subcategory"
-names(kickdf)[names(kickdf) == "currency"] <- "original_currency"
-names(kickdf)[names(kickdf) == "launched"] <- "launch_date"
-names(kickdf)[names(kickdf) == "pledged"] <- "pledged_amount"
-names(kickdf)[names(kickdf) == "state"] <- "project_state"
-names(kickdf)[names(kickdf) == "country"] <- "country_code"
-names(kickdf)[names(kickdf) == "usd.pledged"] <- "usd_pledged"
+# UpDates column names countrydf for consistency
+names(countrydf)[names(countrydf) == "Country_name"] <- "CountryName"
+names(countrydf)[names(countrydf) == "code_2digit"] <- "CountryCode"
 
-# Update column names countrydf for consistency
-names(countrydf)[names(countrydf) == "Country_name"] <- "country_name"
-names(countrydf)[names(countrydf) == "code_2digit"] <- "country_code"
-
-# Update data type for columns in kickdf
-kickdf$project_name <- as.character(kickdf$project_name)
-kickdf$deadline <- as.Date(kickdf$deadline)
-kickdf$launch_date <- as.Date(kickdf$launch_date)
+# UpDates data type for columns in kickdf
+kickdf$project_name <- as.character(kickdf$ProjectName)
+kickdf$Deadline <- as.Date(kickdf$Deadline)
+kickdf$LaunchDate <- as.Date(kickdf$LaunchDate)
 
 # Create a new integer column for number of days the project was active
-kickdf$active_days <- kickdf$deadline - kickdf$launch_date
-kickdf$active_days <- as.integer(kickdf$active_days)
+kickdf$ActiveDays <- kickdf$Deadline - kickdf$LaunchDate
+kickdf$ActiveDays <- as.integer(kickdf$ActiveDays)
 
 # Create a new numeric column for proportion of goal reached
-kickdf$proportion_goal_reached <- round(kickdf$usd_pledged_real / kickdf$usd_goal_real, 2)
+kickdf$GoalAmount <- round(kickdf$GoalAmount, 2)
+kickdf$PledgedAmount <- round(kickdf$PledgedAmount, 2)
+kickdf$ProportionReached <- round(kickdf$PledgedAmount / kickdf$GoalAmount, 2)
 
 # Remove all rows with at least one piece of missing data
 kickdf <- kickdf[complete.cases(kickdf), ]
 
 # Create Country Table
-countrydf <- countrydf[,c("country_code", "country_name")]
+countrydf <- countrydf[,c("CountryCode", "CountryName")]
+countrydf$CountryCode <- as.character(countrydf$CountryCode)
 write.csv(countrydf, file = "Country_T.csv")
 
-# Create Category Table and assign unique category_IDs
-categoryCol <- c("subcategory","main_category")
+# Create Category Table and assign unique CategoryIDs
+categoryCol <- c("SubCategory","MainCategory")
 categorydf <- kickdf[,categoryCol]
 categorydf <- unique(categorydf)
-categorydf <- categorydf[order(categorydf$main_category, categorydf$subcategory), ]
-categorydf$category_ID <- 1:nrow(categorydf)
-categorydf$category_ID <- categorydf$category_ID + 3000
-categorydf <- categorydf[,c("category_ID", "main_category", "subcategory")]
+categorydf <- categorydf[order(categorydf$MainCategory, categorydf$SubCategory), ]
+categorydf$CategoryID <- 1:nrow(categorydf)
+categorydf$CategoryID <- categorydf$CategoryID + 3000
+categorydf <- categorydf[,c("CategoryID", "MainCategory", "SubCategory")]
 write.csv(categorydf, file = "Category_T.csv")
 
-# Import the category_IDs created back into our kickdf
+# Import the CategoryIDs created back into our kickdf
 kickdf <- left_join(kickdf, categorydf)
 
 # Reassign and standardize the project ID numbers
-kickdf$project_ID <- 1:nrow(kickdf)
-kickdf$project_ID <- kickdf$project_ID + 1000000
+kickdf$ProjectID <- 1:nrow(kickdf)
+kickdf$ProjectID <- kickdf$ProjectID + 1000000
 
 # Create Project Table
-projectCol <- c("project_ID", "project_name", "category_ID", 
-                "country_code", "original_currency", "launch_date", 
-                "deadline", "active_days", "usd_goal_real", 
-                "usd_pledged_real", "proportion_goal_reached", 
-                "backers", "project_state")
+projectCol <- c("ProjectID", "ProjectName", "CategoryID", 
+                "CountryCode","OriginalCurrency", "LaunchDate", 
+                "Deadline","ActiveDays","GoalAmount", 
+                "PledgedAmount", "ProportionReached", "Backers", 
+                "ProjectState")
 projectdf <- kickdf[,projectCol]
 write.csv(projectdf, file = "Project_T.csv")
 
 # Create Calendar Table
-calendardf <- data.frame(date = 1:3651)
-calendardf$date <- as.Date("2009-01-01") + calendardf$date
-calendardf$day_of_week <- weekdays(calendardf$date, TRUE)
-calendardf$weekday[calendardf$day_of_week == "Mon"] <- "Weekday"
-calendardf$weekday[calendardf$day_of_week == "Tue"] <- "Weekday"
-calendardf$weekday[calendardf$day_of_week == "Wed"] <- "Weekday"
-calendardf$weekday[calendardf$day_of_week == "Thu"] <- "Weekday"
-calendardf$weekday[calendardf$day_of_week == "Fri"] <- "Weekday"
-calendardf$weekday[calendardf$day_of_week == "Sat"] <- "Weekend"
-calendardf$weekday[calendardf$day_of_week == "Sun"] <- "Weekend"
-calendardf$day_of_week <- as.factor(calendardf$day_of_week)
-calendardf$weekday <- as.factor(calendardf$weekday)
+calendardf <- data.frame(Dates = 1:3651)
+calendardf$Dates <- as.Date("2009-01-01") + calendardf$Dates
+calendardf$Year <- format(calendardf$Dates,"%Y")
+calendardf$Month <- format(calendardf$Dates,"%m")
+calendardf$DayOfMonth <- format(calendardf$Dates,"%d")
+calendardf$DayOfWeek <- weekdays(calendardf$Dates, TRUE)
+calendardf$Weekday[calendardf$DayOfWeek == "Mon"] <- "Weekday"
+calendardf$Weekday[calendardf$DayOfWeek == "Tue"] <- "Weekday"
+calendardf$Weekday[calendardf$DayOfWeek == "Wed"] <- "Weekday"
+calendardf$Weekday[calendardf$DayOfWeek == "Thu"] <- "Weekday"
+calendardf$Weekday[calendardf$DayOfWeek == "Fri"] <- "Weekday"
+calendardf$Weekday[calendardf$DayOfWeek == "Sat"] <- "Weekend"
+calendardf$Weekday[calendardf$DayOfWeek == "Sun"] <- "Weekend"
+calendardf$DayOfWeek <- as.factor(calendardf$DayOfWeek)
+calendardf$Weekday <- as.factor(calendardf$Weekday)
 write.csv(calendardf, file = "Calendar_T.csv")
