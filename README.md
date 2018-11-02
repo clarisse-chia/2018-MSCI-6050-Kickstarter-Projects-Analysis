@@ -14,7 +14,7 @@ Contributors:
   5) Hutan Vahdat
 
 Process:
-  1) Collect data - we found data on both Kickstarter Projects and Country Codes from Kaggle.com 
+  1) Collect data on both Kickstarter Projects and Country Codes from Kaggle.com 
   2) Building Entity Relationship (ER) Diagrams to visualize the relationship between the datapoints
   3) Clean and build upon the dataset on R
   4) Split the dataset into smaller subsets on R before importing them into Oracle SQL
