@@ -3,8 +3,8 @@
 Description: Analyzing data on Kickstarter Projects as a class project for MSCI:6050 Data Management and Visual Analytics
 
 Credits: 
-  1) Mickaël Mouillé for the dataset on Kickstarter Projects (https://www.kaggle.com/kemical)
-  2) Koki Ando for the dataset on Country Codes (https://www.kaggle.com/koki25ando)
+  1) Mickaël Mouillé (https://www.kaggle.com/kemical) for the dataset on Kickstarter Projects (https://www.kaggle.com/kemical/kickstarter-projects)
+  2) Koki Ando (https://www.kaggle.com/koki25ando) for the dataset on Country Codes (https://www.kaggle.com/koki25ando/country-code)
 
 Contributors: 
   1) Clarisse Chia 
