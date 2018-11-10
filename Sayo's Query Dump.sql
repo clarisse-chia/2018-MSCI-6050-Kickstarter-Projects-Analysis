@@ -358,3 +358,16 @@ WHERE PRO.CATEGORYID = CAT.CATEGORYID
     AND PRO.COUNTRYCODE = COU.COUNTRYCODE
     AND PRO.DEADLINE = CAL.DATES
 GROUP BY PRO.PROJECTSTATE;
+    
+    
+    
+ --top 10 KS projects by pledge amount
+ select *
+from (
+select pro.projectname, pro.pledgedamount, pro.goalamount, pro.backers, cal.year, cat.subcategory
+FROM PROJECT_T PRO, COUNTRY_T COU, CATEGORY_T CAT, CALENDAR_T CAL
+WHERE PRO.CATEGORYID = CAT.CATEGORYID
+    AND PRO.COUNTRYCODE = COU.COUNTRYCODE
+    AND PRO.DEADLINE = CAL.DATES
+order by pledgedamount desc)
+where rownum <=10
