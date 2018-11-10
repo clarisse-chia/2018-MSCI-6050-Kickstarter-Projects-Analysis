@@ -160,3 +160,12 @@ WHERE PRO.CATEGORYID = CAT.CATEGORYID
 GROUP BY CAT.MAINCATEGORY, PRO.PROJECTSTATE
 HAVING PRO.PROJECTSTATE = 'successful'
 ORDER BY PRO.PROJECTSTATE, COUNT(PRO.PROJECTID) DESC;
+                  
+--HUTAN's queries
+--Top 10 countries with highest number of projects
+select distinct C.COUNTRYNAME, count(P.projectstate)
+from project_t P join country_t C ON P.COUNTRYCODE = C.COUNTRYCODE
+where rownum <= 374857
+group by c.COUNTRYNAME
+having count(projectstate) > 1756
+order by count(projectstate) desc;
