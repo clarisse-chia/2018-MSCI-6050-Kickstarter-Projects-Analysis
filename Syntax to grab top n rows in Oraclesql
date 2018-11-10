@@ -1,0 +1,8 @@
+select *
+ FROM (
+    select distinct countrycode, count(projectstate)
+from project_t
+group by countrycode
+order by count(projectstate) desc
+ )
+ where rownum <= 10;
