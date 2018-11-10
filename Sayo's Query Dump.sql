@@ -390,3 +390,10 @@ WHERE ROWNUM <= 10;
  --Return % of projects with $0 pledges
    SELECT (COUNT(CASE WHEN PLEDGEDAMOUNT = 0 THEN 1 ELSE NULL END))/(COUNT(*)) * 100 AS "% of projects with $0 pledged"
 FROM PROJECT_T
+                                                                           
+                                                                           --
+--Return avg pledge by country
+      select countrycode, round(avg(pledgedamount),2) as "Avg pledge by Country"
+from project_t
+group by countrycode
+order by round(avg(pledgedamount),2) desc                                                                     
