@@ -16,11 +16,13 @@ Analyzing data on Kickstarter Projects as a class project for MSCI:6050 Data Man
 
 ## Process
   1) Collect data on both Kickstarter Projects and Country Codes from Kaggle.com 
-  2) Building Entity Relationship (ER) Diagrams to visualize the relationship between the datapoints
+  2) Build an Entity Relationship (ER) Diagrams to visualize the relationship between the datapoints
   3) Clean and build upon the dataset on R
   4) Split the dataset into smaller subsets on R before importing them into Oracle SQL
   5) Query the datasets on Oracle SQL
   6) Visualize our findings on Tableau
+  7) Present our results
+  8) Write a report on our lessons learned
 
 ## Data Dictionary
       COLUMN NAMES              DATA TYPE (len)   DESCRIPTION
