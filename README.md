@@ -48,7 +48,7 @@ Analyzing data on Kickstarter Projects as a class project for MSCI:6050 Data Man
       day_of_week               character (3)     Day of the week for "date" column
       weekday                   character (7)     Indicates "date" column is a weekday
       
-## Tables Created
+## Tables Used
   1) Project_T
   2) Category_T
   3) Country_T
