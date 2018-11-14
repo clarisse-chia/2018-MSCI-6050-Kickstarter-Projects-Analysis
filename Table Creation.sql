@@ -1,6 +1,3 @@
---hutan altered data types to allow proper loading of data, date data types have been replaced with char, this shouldn't be an issue 
---we basically changed number data types to strings for simplicity
-
 CREATE TABLE CALENDAR_T (
     Dates varchar2(15) NOT NULL,
     Year varchar2(4),
